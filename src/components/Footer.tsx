@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="items-center grid grid-cols-2 w-full">
         <div className="flex justify-center w-full">
           <button>
-            <Link to={"/homepage"}>
+            <Link to={"/"}>
               <MdHomeFilled size={30} color="white" />
             </Link>
           </button>

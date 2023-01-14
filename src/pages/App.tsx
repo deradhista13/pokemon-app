@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import "../styles/App.css";
 import Layout from "../components/Layout";
 import axios from "axios";
 import Card from "../components/Card";

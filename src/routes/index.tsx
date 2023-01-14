@@ -11,7 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const router = createBrowserRouter([
   {
-    path: "/homepage",
+    path: "/",
     element: <Homepage />,
   },
   {
