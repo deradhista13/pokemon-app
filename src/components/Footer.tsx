@@ -3,16 +3,24 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="btm-nav flex justify-center w-full sticky bottom-0 z-50">
-      <button>
-        <Link to={"/"}>
-          <MdHomeFilled size={30} />
-        </Link>
-      </button>
-      <button>
-        <MdCatchingPokemon size={30} />
-      </button>
-    </div>
+    <footer className="footer items-center p-4 bg-black sticky bottom-0 z-50">
+      <div className="items-center grid grid-cols-2 w-full">
+        <div className="flex justify-center w-full">
+          <button>
+            <Link to={"/homepage"}>
+              <MdHomeFilled size={30} color="white" />
+            </Link>
+          </button>
+        </div>
+        <div className="flex justify-center w-full">
+          <button>
+            <Link to={"/pokemon"}>
+              <MdCatchingPokemon size={30} color="white" />
+            </Link>
+          </button>
+        </div>
+      </div>
+    </footer>
   );
 };
 

@@ -32,7 +32,7 @@ const Homepage = () => {
   }
 
   return (
-    <Layout>
+    <Layout overflow="auto">
       <div className="grid grid-flow-row auto-rows-max grid-cols-2 p-6">
         {data.map((data) => (
           <Card

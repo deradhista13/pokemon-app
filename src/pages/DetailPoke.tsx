@@ -1,38 +1,42 @@
 import axios from "axios";
-import React, { CSSProperties, FC, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import CardDetail from "../components/CardDetail";
 import Layout from "../components/Layout";
 import { DetailsType } from "../utils/type/pokemon";
-import { ProfilePoke } from "../utils/type/pokemon";
 import { AbilitiesType } from "../utils/type/pokemon";
 import { MovesType } from "../utils/type/pokemon";
 import { StatsType } from "../utils/type/pokemon";
+import { useTitle } from "../utils/hooks/title";
 
-const DetailPoke: FC<CSSProperties> = () => {
-  const { id_pokemon, name_pokemon } = useParams();
-  const [data, setData] = useState<DetailsType[]>([]);
-  const [baseStat, setBaseStat] = useState<StatsType[]>([]);
+const DetailPoke = () => {
   const [abilities, setAbilities] = useState<AbilitiesType[]>([]);
+  const [baseStat, setBaseStat] = useState<StatsType[]>([]);
+  const [namePoke, setNamePoke] = useState<string>("");
+  const [data, setData] = useState<DetailsType[]>([]);
   const [moves, setMoves] = useState<MovesType[]>([]);
-  const [weight, setWeight] = useState<ProfilePoke>({});
-  const [height, setHeight] = useState<ProfilePoke>({});
+  const { id_pokemon, name_pokemon } = useParams();
+  const [weight, setWeight] = useState<string>("");
+  const [height, setHeight] = useState<string>("");
+  useTitle(`Details ${name_pokemon}- Pokemon App`);
+  const navigate = useNavigate();
 
   function fetchData() {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${id_pokemon}`)
       .then((res) => {
-        console.log("data stats: ", res.data.stats);
         const ability = res.data.abilities;
         const status = res.data.stats;
         const move = res.data.moves;
         const datas = res.data.types;
+        const { weight, height, name } = res.data;
         setAbilities(ability);
+        setNamePoke(name);
         setBaseStat(status);
-        setWeight(res.data);
-        setHeight(res.data);
+        setWeight(weight);
+        setHeight(height);
         setMoves(move);
         setData(datas);
       })
@@ -43,10 +47,14 @@ const DetailPoke: FC<CSSProperties> = () => {
     fetchData();
   }, []);
 
+  function catchHandler(name: string) {
+    navigate(`/catch/${name}`);
+  }
+
   return (
-    <Layout>
+    <Layout overflow="auto">
       <div className="flex justify-center w-full mt-8">
-        <h1 className="uppercase font-bold text-xl md:text-2xl text-black">
+        <h1 className="uppercase font-bold text-xl md:text-2xl text-white">
           {name_pokemon}
         </h1>
       </div>
@@ -90,10 +98,10 @@ const DetailPoke: FC<CSSProperties> = () => {
               Name: {name_pokemon}
             </p>
             <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">
-              Weight: {weight.weight}
+              Weight: {weight}
             </p>
             <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">
-              Height: {height.height}
+              Height: {height}
             </p>
           </div>
         </CardDetail>
@@ -119,7 +127,11 @@ const DetailPoke: FC<CSSProperties> = () => {
         </CardDetail>
       </div>
       <div className="w-full flex justify-center mb-10">
-        <Button label="Catch!" className="text-white" />
+        <Button
+          label="Catch!"
+          className="text-white dark:text-black dark:bg-white font-bold hover:scale-x-110 hover:shadow-black hover:shadow-md dark:hover:shadow-white dark:hover:shadow-md"
+          onClick={() => catchHandler(namePoke)}
+        />
       </div>
     </Layout>
   );

@@ -1,4 +1,5 @@
 export interface PokeType {
+  id: number;
   name: string;
   url: string;
 }
@@ -13,6 +14,7 @@ export interface DetailsType {
 export interface ProfilePoke {
   weight?: number;
   height?: number;
+  name?: string;
 }
 
 export interface AbilitiesType {
@@ -32,4 +34,12 @@ export interface StatsType {
   stat: {
     name: string;
   };
+}
+
+export interface ImgType {
+  front_default?: string;
+}
+export interface CatchType {
+  name?: string;
+  id?: number;
 }
